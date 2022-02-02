@@ -1,6 +1,6 @@
 build:
   docker:
-    web: php/Dockerfile.heroku
+    web: Dockerfile.heroku
   config:
     PUID: 1000
     PGID: 1000 
