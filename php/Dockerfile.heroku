@@ -1,0 +1,29 @@
+FROM php:8.0-apache
+
+ARG PUID
+ARG PGID
+
+RUN addgroup user
+RUN adduser --disabled-password --gecos '' user
+
+RUN apt update \
+    && apt install -y \
+        g++ \
+        libicu-dev \
+        libpq-dev \
+        libzip-dev \
+        zlib1g-dev \
+        git \
+    && docker-php-ext-install \
+        intl \
+        opcache \
+        pdo \
+        pdo_mysql \
+        mysqli
+
+WORKDIR /var/www/desafio
+
+RUN curl -sS http://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN sed -i "s/Listen 80/Listen $PORT/g" /etc/apache2/ports.conf
+
+USER user
