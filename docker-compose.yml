@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  database:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=root
+
+  php-apache:
+    container_name: php-apache
+    build:
+      context: ./php
+      args:
+        - PUID=${HOST_PUID}
+        - PGID=${HOST_PGID}
+    ports:
+      - '8080:80'
+    volumes:
+      - ./src:/var/www/desafio
+      - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - database
