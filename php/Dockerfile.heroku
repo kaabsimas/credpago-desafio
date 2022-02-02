@@ -24,6 +24,7 @@ RUN apt update \
 WORKDIR /var/www/desafio
 
 RUN curl -sS http://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN sed -i "s/Listen 80/Listen $PORT/g" /etc/apache2/ports.conf
+COPY ../apache/run-apache2.sh /usr/local/bin/
+CMD [ "run-apache2.sh" ]
 
 USER user
