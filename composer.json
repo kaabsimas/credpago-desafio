@@ -1,0 +1,12 @@
+{
+    "name": "albert/credpago",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Albert Melo",
+            "email": "albert_usm@hotmail.com"
+        }
+    ],
+    "require": {},
+    "scripts" : { "post-install-cmd" : "cd src;composer install" }
+}
